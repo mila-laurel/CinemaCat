@@ -1,6 +1,20 @@
-@CinemaCat.Api_HostAddress = http://localhost:5299
-
-GET {{CinemaCat.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+@CinemaCat.Api_HostAddress = http://localhost:5286
 
 ###
+
+POST {{CinemaCat.Api_HostAddress}}/api/movies
+Content-Type: application/json
+
+{
+  "title": "Pride, Prejudice and the Source Code",
+  "releasedDate": "2023-12-04",
+  "director": {
+    "name": "John Doe"
+  },
+  "rating": 5
+}
+
+###
+
+GET {{CinemaCat.Api_HostAddress}}/api/movies/search?title=name
+Accept: application/json

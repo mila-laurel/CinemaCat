@@ -27,6 +27,7 @@ namespace CinemaCat.Api.Controllers
                 Director = movie.Director,
                 TopActors = []
             };
+
             return await moviesProvider.CreateAsync(newValue);
         }
 

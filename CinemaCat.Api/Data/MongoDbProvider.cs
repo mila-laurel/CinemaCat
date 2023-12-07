@@ -42,8 +42,9 @@ public class MongoDbProvider<TEntity> : IDataBaseProvider<TEntity> where TEntity
 
     Expression<Func<TEntity?, bool>> BuildIdEqualsExpression<TId>(TId id)
     {
+        // x => x.Id == id
         var parameterExpression = Expression.Parameter(typeof(TEntity), "x");
-        var idPropertyExpression = Expression.Property(parameterExpression, "Id");
+        var idPropertyExpression = Expression.Property(parameterExpression, IdPropertyName);
         var idParameterExpression = Expression.Constant(id);
         var body = Expression.Equal(idPropertyExpression, idParameterExpression);
         return Expression.Lambda<Func<TEntity?, bool>>(body, parameterExpression);

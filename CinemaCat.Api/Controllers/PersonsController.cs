@@ -7,12 +7,13 @@ namespace CinemaCat.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController(IDataBaseProvider<PersonDetails> personProvider) : ControllerBase
+    public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<PersonDetails>> Get(Guid id)
+        [Route("{person_id}")]
+        public async Task<ActionResult<PersonDetails>> Get(Guid person_id)
         {
-            var result = await personProvider.GetByIdAsync(id);
+            var result = await personsProvider.GetByIdAsync(person_id);
             return result == null ? NotFound() : Ok(result);
         }
 
@@ -23,16 +24,17 @@ namespace CinemaCat.Api.Controllers
             {
                 Person = person.Name,
                 DateOfBirth = DateOnly.Parse(person.DateOfBirth),
-                PlaceOfBirth = Enum.Parse<Country>(person.PlaceOfBirth)
+                PlaceOfBirth = person.PlaceOfBirth
             };
 
-            return await personProvider.CreateAsync(newValue);
+            return await personsProvider.CreateAsync(newValue);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(Guid id)
+        [Route("{person_id}")]
+        public async Task<IActionResult> Delete(Guid person_id)
         {
-            await personProvider.RemoveAsync(id);
+            await personsProvider.RemoveAsync(person_id);
             return Ok();
         }
 
@@ -40,7 +42,7 @@ namespace CinemaCat.Api.Controllers
         [Route("search")]
         public async Task<ActionResult<List<PersonDetails>>> Search(string name)
         {
-            return await personProvider.GetAsync(p => p.Person.Name.Contains(name));
+            return await personsProvider.GetAsync(p => p.Person.Name.Contains(name));
         }
     }
 }

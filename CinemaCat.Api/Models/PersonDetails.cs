@@ -10,7 +10,6 @@ namespace CinemaCat.Api.Models
 
         public DateOnly DateOfBirth { get; set; }
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Country PlaceOfBirth { get; set; }
+        public string PlaceOfBirth { get; set; }
     }
 }

@@ -10,9 +10,10 @@ namespace CinemaCat.Api.Controllers
     public class MoviesController(IDataBaseProvider<Movie> moviesProvider) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<Movie>> Get(Guid id)
+        [Route("{movie_id}")]
+        public async Task<ActionResult<Movie>> Get(Guid movie_id)
         {
-            var result = await moviesProvider.GetByIdAsync(id);
+            var result = await moviesProvider.GetByIdAsync(movie_id);
             return result == null ? NotFound() : Ok(result);
         }
 
@@ -31,9 +32,10 @@ namespace CinemaCat.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(Guid id)
+        [Route("{movie_id}")]
+        public async Task<IActionResult> Delete(Guid movie_id)
         {
-            await moviesProvider.RemoveAsync(id);
+            await moviesProvider.RemoveAsync(movie_id);
             return Ok();
         }
         

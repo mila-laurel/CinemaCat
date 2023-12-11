@@ -15,8 +15,8 @@
         <PackageReference Include="Azure.Storage.Queues" Version="12.17.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
-        <PackageReference Include="Microsoft.Maui.Graphics" Version="8.0.3" />
         <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 

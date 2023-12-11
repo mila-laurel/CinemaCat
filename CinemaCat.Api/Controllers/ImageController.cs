@@ -1,13 +1,10 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using CinemaCat.Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.Platform;
-using System.Drawing;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
 
 namespace CinemaCat.Api.Controllers
 {
@@ -37,26 +34,31 @@ namespace CinemaCat.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<Models.Image> UploadImage([FromForm] IFormFile file)
+        public async Task<Models.Image> UploadImage(IFormFile file)
         {
+            var result = new Models.Image();
             BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient("images");
             var stream = file.OpenReadStream();
-            var image = PlatformImage.FromStream(stream);
-            IImage newImage = image.Downsize(100);
+            using (var fullImageStream = new MemoryStream())
+            using (var previewImageStream = new MemoryStream())
+            using (var image = Image.Load(stream))
+            {
+                image.Save(fullImageStream, new JpegEncoder());
+                var ratio = image.Height / image.Width;
+                var clone = image.Clone(x => x.Resize(250 * ratio, 250));
+                clone.Save(previewImageStream, new JpegEncoder());
 
-            var blob = containerClient.GetBlockBlobClient("full/" + file.FileName);
-            await blob.UploadAsync(stream);
-            var blobCompressed = containerClient.GetBlockBlobClient("compressed/" + file.FileName);
-            using (MemoryStream memStream = new MemoryStream())
-            {
-                newImage.Save(memStream);
-                await blobCompressed.UploadAsync(memStream);
+                previewImageStream.Position = 0;
+                fullImageStream.Position = 0;
+                var guid = Guid.NewGuid();
+                var blob = containerClient.GetBlockBlobClient("full/" + guid);
+                var blobCompressed = containerClient.GetBlockBlobClient("compressed/" + guid);
+                await blob.UploadAsync(fullImageStream);
+                await blobCompressed.UploadAsync(previewImageStream);
+
+                result.FullImageUrl = blob.Uri.ToString();
+                result.CompressedImageUrl = blobCompressed.Uri.ToString();
             }
-            var result = new Models.Image()
-            {
-                FullImageUrl = blob.Uri.ToString(),
-                CompressedImageUrl = blobCompressed.Uri.ToString()
-            };
 
             return result;
         }

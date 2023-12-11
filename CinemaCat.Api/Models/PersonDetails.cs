@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace CinemaCat.Api.Models
+﻿namespace CinemaCat.Api.Models
 {
     public class PersonDetails
     {
@@ -11,5 +9,7 @@ namespace CinemaCat.Api.Models
         public DateOnly DateOfBirth { get; set; }
 
         public string PlaceOfBirth { get; set; }
+
+        public Image Photo {  get; set; }
     }
 }

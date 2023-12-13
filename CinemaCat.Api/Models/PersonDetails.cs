@@ -1,4 +1,4 @@
-﻿namespace CinemaCat.Api.Models
+namespace CinemaCat.Api.Models
 {
     public class PersonDetails
     {

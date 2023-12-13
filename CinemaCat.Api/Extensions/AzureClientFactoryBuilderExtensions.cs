@@ -1,6 +1,9 @@
 using Azure.Core.Extensions;
 using Azure.Storage.Blobs;
+using CinemaCat.Api.Extensions;
 using Microsoft.Extensions.Azure;
+
+namespace CinemaCat.Api.Extensions;
 
 internal static class AzureClientFactoryBuilderExtensions
 {

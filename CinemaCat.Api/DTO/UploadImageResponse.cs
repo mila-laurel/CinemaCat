@@ -1,9 +1,8 @@
-﻿namespace CinemaCat.Api.DTO
-{
-    public class UploadImageResponse
-    {
-        public string FullImageUrl { get; set; }
+﻿namespace CinemaCat.Api.DTO;
 
-        public string CompressedImageUrl { get; set; }
-    }
+public class UploadImageResponse
+{
+    public string FullImageUrl { get; set; }
+
+    public string CompressedImageUrl { get; set; }
 }

@@ -20,16 +20,14 @@ namespace CinemaCat.Api.Controllers
             _blobServiceClient = blobServiceClient;
         }
 
-        [HttpGet("{id}/{compressed?}", Name = "GetImage")]
+        [HttpGet("{id}", Name = "GetImage")]
         [ProducesResponseType(typeof(Stream), 200)]
         public async Task<IActionResult> Get(Guid id, bool compressed = false)
         {
             BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient("images");
-            var blob = containerClient.GetBlockBlobClient((compressed ? "compressed/" : "full/") + id);
-            using (var stream = await blob.OpenReadAsync())
-            {
-                return File(stream, "image/jpeg");
-            }           
+            var blob = containerClient.GetBlobClient((compressed ? "compressed/" : "full/") + id);
+            var stream = await blob.OpenReadAsync();
+            return File(stream, "image/jpeg");
         }
 
         [HttpPost]

@@ -1,6 +1,7 @@
 using CinemaCat.Api.Data;
 using CinemaCat.Api.Extensions;
 using Microsoft.Extensions.Azure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddAzureClients(clientBuilder =>
 {
     clientBuilder.AddBlobServiceClient(builder.Configuration.GetConnectionString("BlobStorage"), preferMsi: true);
 });
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 var app = builder.Build();
 

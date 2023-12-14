@@ -1,13 +1,15 @@
 ﻿using CinemaCat.Api.Data;
 using CinemaCat.Api.DTO;
+using CinemaCat.Api.Handlers.Person.CreatePerson;
 using CinemaCat.Api.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaCat.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider) : ControllerBase
+public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider, IMediator mediator) : ControllerBase
 {
     [HttpGet]
     [Route("{person_id}")]
@@ -18,16 +20,15 @@ public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider)
     }
 
     [HttpPost]
-    public async Task<ActionResult<PersonDetails>> Create([FromBody] CreatePersonModel person)
+    public async Task<ActionResult<CreatePersonResponse>> Create([FromBody] CreatePersonModel person)
     {
-        var newValue = new PersonDetails
+        var req = new CreatePersonRequest
         {
-            Person = person.Name,
-            DateOfBirth = DateOnly.Parse(person.DateOfBirth),
+            Name = person.Name,
+            DateOfBirth = person.DateOfBirth,
             PlaceOfBirth = person.PlaceOfBirth
         };
-
-        return await personsProvider.CreateAsync(newValue);
+        return await mediator.Send(req);
     }
 
     [HttpDelete]

@@ -6,12 +6,18 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>f90e0f2e-36c0-46b5-aa65-b1261dcbb149</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
+        <PackageReference Include="Azure.Storage.Files.Shares" Version="12.17.1" />
+        <PackageReference Include="Azure.Storage.Queues" Version="12.17.1" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
         <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>

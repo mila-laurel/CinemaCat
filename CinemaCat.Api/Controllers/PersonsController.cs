@@ -1,5 +1,6 @@
 ﻿using CinemaCat.Api.Data;
 using CinemaCat.Api.DTO;
+using CinemaCat.Api.Extensions;
 using CinemaCat.Api.Handlers.Person.CreatePerson;
 using CinemaCat.Api.Models;
 using MediatR;
@@ -20,7 +21,7 @@ public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider,
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreatePersonResponse>> Create([FromBody] CreatePersonModel person)
+    public async Task<ActionResult<PersonDetails>> Create([FromBody] CreatePersonModel person)
     {
         var req = new CreatePersonRequest
         {
@@ -28,7 +29,8 @@ public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider,
             DateOfBirth = person.DateOfBirth,
             PlaceOfBirth = person.PlaceOfBirth
         };
-        return await mediator.Send(req);
+        var response = await mediator.Send(req);
+        return response.ToResult();
     }
 
     [HttpDelete]
@@ -43,6 +45,6 @@ public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider,
     [Route("search")]
     public async Task<ActionResult<List<PersonDetails>>> Search(string name)
     {
-        return await personsProvider.GetAsync(p => p.Person.Name.Contains(name));
+        return await personsProvider.GetAsync(p => p.Name.Contains(name));
     }
 }

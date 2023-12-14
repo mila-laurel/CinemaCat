@@ -4,7 +4,7 @@ namespace CinemaCat.Api.Handlers.Person.CreatePerson;
 
 public class CreatePersonRequest : IRequest<CreatePersonResponse>
 {
-    public Models.Person Name { get; internal set; }
-    public string DateOfBirth { get; internal set; }
-    public string PlaceOfBirth { get; internal set; }
+    public string Name { get; init; }
+    public string DateOfBirth { get; init; }
+    public string PlaceOfBirth { get; init; }
 }

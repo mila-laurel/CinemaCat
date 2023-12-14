@@ -2,4 +2,4 @@
 
 namespace CinemaCat.Api.DTO;
 
-public record class CreatePersonModel(Person Name, string DateOfBirth, string PlaceOfBirth);
+public record class CreatePersonModel(string Name, string DateOfBirth, string PlaceOfBirth);

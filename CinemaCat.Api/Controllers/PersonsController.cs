@@ -1,7 +1,9 @@
-﻿using CinemaCat.Api.Data;
-using CinemaCat.Api.DTO;
+﻿using CinemaCat.Api.DTO;
 using CinemaCat.Api.Extensions;
-using CinemaCat.Api.Handlers.Person.CreatePerson;
+using CinemaCat.Api.Handlers.Persons.CreatePerson;
+using CinemaCat.Api.Handlers.Persons.DeletePerson;
+using CinemaCat.Api.Handlers.Persons.GetPerson;
+using CinemaCat.Api.Handlers.Persons.SearchPerson;
 using CinemaCat.Api.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,15 @@ namespace CinemaCat.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider, IMediator mediator) : ControllerBase
+public class PersonsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     [Route("{person_id}")]
     public async Task<ActionResult<PersonDetails>> Get(Guid person_id)
     {
-        var result = await personsProvider.GetByIdAsync(person_id);
-        return result == null ? NotFound() : Ok(result);
+        var req = new GetPersonRequest { Id = person_id };
+        var response = await mediator.Send(req);
+        return response.ToResult(r => Ok(r), e => NotFound(e));
     }
 
     [HttpPost]
@@ -35,16 +38,19 @@ public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider,
 
     [HttpDelete]
     [Route("{person_id}")]
-    public async Task<IActionResult> Delete(Guid person_id)
+    public async Task<ActionResult> Delete(Guid person_id)
     {
-        await personsProvider.RemoveAsync(person_id);
-        return Ok();
+        var req = new DeletePersonRequest { Id = person_id };
+        var response = await mediator.Send(req);
+        return response.ToResult();
     }
 
     [HttpGet]
     [Route("search")]
     public async Task<ActionResult<List<PersonDetails>>> Search(string name)
     {
-        return await personsProvider.GetAsync(p => p.Name.Contains(name));
+        var req = new SearchPersonPequest { Name = name };
+        var response = await mediator.Send(req);
+        return response.ToResult(r => Ok(r), e => NotFound(e));
     }
 }

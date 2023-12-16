@@ -10,5 +10,5 @@ public class PersonDetails
 
     public string PlaceOfBirth { get; set; }
 
-    public Image Photo {  get; set; }
+    public ProfileImage Photo {  get; set; }
 }

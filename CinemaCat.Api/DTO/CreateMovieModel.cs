@@ -2,4 +2,4 @@
 
 namespace CinemaCat.Api.DTO;
 
-public record class CreateMovieModel(string Title, string ReleasedDate, Person Director, int Rating);
+public record class CreateMovieModel(string Title, string ReleasedDate, string DirectorName, int Rating);

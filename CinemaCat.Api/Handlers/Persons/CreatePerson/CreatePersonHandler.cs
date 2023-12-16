@@ -1,7 +1,7 @@
 ﻿using CinemaCat.Api.Data;
 using CinemaCat.Api.Models;
 
-namespace CinemaCat.Api.Handlers.Person.CreatePerson;
+namespace CinemaCat.Api.Handlers.Persons.CreatePerson;
 
 public class CreatePersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<CreatePersonRequest, CreatePersonResponse>

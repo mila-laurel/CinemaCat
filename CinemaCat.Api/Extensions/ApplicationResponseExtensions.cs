@@ -5,6 +5,15 @@ namespace CinemaCat.Api.Extensions;
 
 public static class ApplicationResponseExtensions
 {
+    public static ActionResult ToResult(this ApplicationResponse response)
+    {
+        return response.IsSuccess switch
+        {
+            true => new OkObjectResult(null),
+            false => new ObjectResult(response.Error) { StatusCode = StatusCodes.Status500InternalServerError }
+        };
+    }
+
     public static ActionResult<TResult> ToResult<TResult>(this ApplicationResponse<TResult> response)
     {
         return response.IsSuccess switch

@@ -1,6 +1,6 @@
-﻿namespace CinemaCat.Api.DTO;
+﻿namespace CinemaCat.Api.Models;
 
-public class UploadImageResponse
+public class ProfileImage
 {
     public string FullImageUrl { get; set; }
 

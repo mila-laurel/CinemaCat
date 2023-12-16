@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CinemaCat.Api.Handlers.Person.CreatePerson;
+namespace CinemaCat.Api.Handlers.Persons.CreatePerson;
 
 public class CreatePersonRequest : IRequest<CreatePersonResponse>
 {

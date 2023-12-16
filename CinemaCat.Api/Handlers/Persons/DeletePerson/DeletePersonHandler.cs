@@ -3,7 +3,7 @@ using CinemaCat.Api.Models;
 
 namespace CinemaCat.Api.Handlers.Persons.DeletePerson;
 
-public class DeletePersonHandler(IDataBaseProvider<Person> personsProvider)
+public class DeletePersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<DeletePersonRequest, DeletePersonResponse>
 {
     protected override async Task<DeletePersonResponse> HandleInternal(

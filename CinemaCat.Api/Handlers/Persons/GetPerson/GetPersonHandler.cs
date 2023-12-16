@@ -3,7 +3,7 @@ using CinemaCat.Api.Models;
 
 namespace CinemaCat.Api.Handlers.Persons.GetPerson;
 
-public class GetPersonHandler(IDataBaseProvider<Person> personsProvider)
+public class GetPersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<GetPersonRequest, GetPersonResponse>
 {
     protected override async Task<GetPersonResponse> HandleInternal(

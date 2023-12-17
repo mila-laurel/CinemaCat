@@ -36,7 +36,7 @@ public class PersonsController(IMediator mediator) : ControllerBase
             Photo = person.Photo
         };
         var response = await mediator.Send(req);
-        var url = $"{Request.Scheme}://{Request.Host}{Url.RouteUrl("GetPerson", new { id = response.Result?.Id })}";
+        var url = Url.RouteUrl("GetPerson", new { person_id = response.Result?.Id }, protocol: Request.Scheme);
         return response.ToResult(r => Created(url, r), e => NotFound(e));
     }
 

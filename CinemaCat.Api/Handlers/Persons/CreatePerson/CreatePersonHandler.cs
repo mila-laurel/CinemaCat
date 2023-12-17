@@ -14,7 +14,8 @@ public class CreatePersonHandler(IDataBaseProvider<PersonDetails> personsProvide
         {
             Name = request.Name,
             DateOfBirth = DateOnly.Parse(request.DateOfBirth),
-            PlaceOfBirth = request.PlaceOfBirth
+            PlaceOfBirth = request.PlaceOfBirth,
+            Photo = request.Photo
         };
         var details = await personsProvider.CreateAsync(newValue);
         return new CreatePersonResponse { Result = details };

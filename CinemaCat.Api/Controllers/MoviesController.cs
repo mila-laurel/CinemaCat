@@ -39,7 +39,7 @@ public class MoviesController(IMediator mediator) : ControllerBase
 
         };
         var response = await mediator.Send(req);
-        var url = $"{Request.Scheme}://{Request.Host}{Url.RouteUrl("GetMovie", new { id = response.Result?.Id })}";
+        var url = Url.RouteUrl("GetMovie", new { movie_id = response.Result?.Id }, protocol: Request.Scheme);
         return response.ToResult(r => Created(url, r), e => NotFound(e));
     }
 

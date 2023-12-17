@@ -1,4 +1,4 @@
-﻿using CinemaCat.Api.Models;
+﻿using CinemaCat.Api.DTO;
 
 namespace CinemaCat.Api.Handlers.Images.UploadImage;
 

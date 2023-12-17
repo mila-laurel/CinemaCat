@@ -15,7 +15,8 @@ namespace CinemaCat.Api.Controllers;
 public class PersonsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [Route("{person_id}")]
+    [Route("{person_id}", Name = "GetPerson")]
+    [ProducesResponseType(typeof(PersonDetails), 200)]
     public async Task<ActionResult<PersonDetails>> Get(Guid person_id)
     {
         var req = new GetPersonRequest { Id = person_id };
@@ -24,20 +25,24 @@ public class PersonsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(PersonDetails), 201)]
     public async Task<ActionResult<PersonDetails>> Create([FromBody] CreatePersonModel person)
     {
         var req = new CreatePersonRequest
         {
             Name = person.Name,
             DateOfBirth = person.DateOfBirth,
-            PlaceOfBirth = person.PlaceOfBirth
+            PlaceOfBirth = person.PlaceOfBirth,
+            Photo = person.Photo
         };
         var response = await mediator.Send(req);
-        return response.ToResult();
+        var url = $"{Request.Scheme}://{Request.Host}{Url.RouteUrl("GetPerson", new { id = response.Result?.Id })}";
+        return response.ToResult(r => Created(url, r), e => NotFound(e));
     }
 
     [HttpDelete]
     [Route("{person_id}")]
+    [ProducesResponseType(200)]
     public async Task<ActionResult> Delete(Guid person_id)
     {
         var req = new DeletePersonRequest { Id = person_id };
@@ -47,6 +52,7 @@ public class PersonsController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [Route("search")]
+    [ProducesResponseType(typeof(List<PersonDetails>), 200)]
     public async Task<ActionResult<List<PersonDetails>>> Search(string name)
     {
         var req = new SearchPersonPequest { Name = name };

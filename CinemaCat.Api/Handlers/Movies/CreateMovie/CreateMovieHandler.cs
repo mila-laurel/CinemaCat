@@ -15,7 +15,7 @@ public class CreateMovieHandler(IDataBaseProvider<Movie> moviesProvider)
             Title = request.Title,
             Rating = request.Rating,
             ReleasedDate = DateOnly.Parse(request.ReleasedDate),
-            Director = new (request.Director, null, null),
+            Director = request.Director,
             TopActors = []
         };
         var movie = await moviesProvider.CreateAsync(newValue);

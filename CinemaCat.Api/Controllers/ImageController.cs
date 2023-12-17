@@ -1,7 +1,7 @@
-﻿using CinemaCat.Api.Extensions;
+﻿using CinemaCat.Api.DTO;
+using CinemaCat.Api.Extensions;
 using CinemaCat.Api.Handlers.Images.GetImage;
 using CinemaCat.Api.Handlers.Images.UploadImage;
-using CinemaCat.Api.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

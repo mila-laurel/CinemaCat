@@ -15,7 +15,8 @@ namespace CinemaCat.Api.Controllers;
 public class MoviesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [Route("{movie_id}")]
+    [Route("{movie_id}", Name = "GetMovie")]
+    [ProducesResponseType(typeof(Movie), 200)]
     public async Task<ActionResult<Movie>> Get(Guid movie_id)
     {
         var req = new GetMovieRequest { Id = movie_id };
@@ -24,21 +25,27 @@ public class MoviesController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(Movie), 201)]
     public async Task<ActionResult<Movie>> Create([FromBody] CreateMovieModel movie)
     {
         var req = new CreateMovieRequest
         {
             Title = movie.Title,
             ReleasedDate = movie.ReleasedDate,
-            Director = movie.DirectorName,
-            Rating = movie.Rating
+            Director = movie.Director,
+            Rating = movie.Rating,
+            TopActors = movie.TopActors,
+            Poster = movie.Poster
+
         };
         var response = await mediator.Send(req);
-        return response.ToResult();
+        var url = $"{Request.Scheme}://{Request.Host}{Url.RouteUrl("GetMovie", new { id = response.Result?.Id })}";
+        return response.ToResult(r => Created(url, r), e => NotFound(e));
     }
 
     [HttpDelete]
     [Route("{movie_id}")]
+    [ProducesResponseType(200)]
     public async Task<ActionResult> Delete(Guid movie_id)
     {
         var req = new DeleteMovieRequest { Id = movie_id };
@@ -48,6 +55,7 @@ public class MoviesController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [Route("search")]
+    [ProducesResponseType(typeof(List<Movie>), 200)]
     public async Task<ActionResult<List<Movie>>> Search(string title)
     {
         var req = new SearchMovieRequest { Title = title };

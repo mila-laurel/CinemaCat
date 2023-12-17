@@ -1,8 +1,3 @@
 ﻿namespace CinemaCat.Api.Models;
 
-public class ProfileImage
-{
-    public string FullImageUrl { get; set; }
-
-    public string CompressedImageUrl { get; set; }
-}
+public record class ProfileImage (string FullImageUrl, string CompressedImageUrl);

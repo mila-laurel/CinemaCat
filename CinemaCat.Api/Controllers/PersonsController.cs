@@ -1,47 +1,62 @@
-﻿using CinemaCat.Api.Data;
-using CinemaCat.Api.DTO;
+﻿using CinemaCat.Api.DTO;
+using CinemaCat.Api.Extensions;
+using CinemaCat.Api.Handlers.Persons.CreatePerson;
+using CinemaCat.Api.Handlers.Persons.DeletePerson;
+using CinemaCat.Api.Handlers.Persons.GetPerson;
+using CinemaCat.Api.Handlers.Persons.SearchPerson;
 using CinemaCat.Api.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaCat.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PersonsController(IDataBaseProvider<PersonDetails> personsProvider) : ControllerBase
+public class PersonsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [Route("{person_id}")]
+    [Route("{person_id}", Name = "GetPerson")]
+    [ProducesResponseType(typeof(PersonDetails), 200)]
     public async Task<ActionResult<PersonDetails>> Get(Guid person_id)
     {
-        var result = await personsProvider.GetByIdAsync(person_id);
-        return result == null ? NotFound() : Ok(result);
+        var req = new GetPersonRequest { Id = person_id };
+        var response = await mediator.Send(req);
+        return response.ToResult(r => Ok(r), e => NotFound(e));
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(PersonDetails), 201)]
     public async Task<ActionResult<PersonDetails>> Create([FromBody] CreatePersonModel person)
     {
-        var newValue = new PersonDetails
+        var req = new CreatePersonRequest
         {
-            Person = person.Name,
-            DateOfBirth = DateOnly.Parse(person.DateOfBirth),
-            PlaceOfBirth = person.PlaceOfBirth
+            Name = person.Name,
+            DateOfBirth = person.DateOfBirth,
+            PlaceOfBirth = person.PlaceOfBirth,
+            Photo = person.Photo
         };
-
-        return await personsProvider.CreateAsync(newValue);
+        var response = await mediator.Send(req);
+        var url = Url.RouteUrl("GetPerson", new { person_id = response.Result?.Id }, protocol: Request.Scheme);
+        return response.ToResult(r => Created(url, r), e => NotFound(e));
     }
 
     [HttpDelete]
     [Route("{person_id}")]
-    public async Task<IActionResult> Delete(Guid person_id)
+    [ProducesResponseType(200)]
+    public async Task<ActionResult> Delete(Guid person_id)
     {
-        await personsProvider.RemoveAsync(person_id);
-        return Ok();
+        var req = new DeletePersonRequest { Id = person_id };
+        var response = await mediator.Send(req);
+        return response.ToResult();
     }
 
     [HttpGet]
     [Route("search")]
+    [ProducesResponseType(typeof(List<PersonDetails>), 200)]
     public async Task<ActionResult<List<PersonDetails>>> Search(string name)
     {
-        return await personsProvider.GetAsync(p => p.Person.Name.Contains(name));
+        var req = new SearchPersonPequest { Name = name };
+        var response = await mediator.Send(req);
+        return response.ToResult(r => Ok(r), e => NotFound(e));
     }
 }

@@ -1,48 +1,65 @@
-using CinemaCat.Api.Data;
 using CinemaCat.Api.DTO;
+using CinemaCat.Api.Extensions;
+using CinemaCat.Api.Handlers.Movies.CreateMovie;
+using CinemaCat.Api.Handlers.Movies.DeleteMovie;
+using CinemaCat.Api.Handlers.Movies.GetMovie;
+using CinemaCat.Api.Handlers.Movies.SearchMovie;
 using CinemaCat.Api.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaCat.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MoviesController(IDataBaseProvider<Movie> moviesProvider) : ControllerBase
+public class MoviesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [Route("{movie_id}")]
+    [Route("{movie_id}", Name = "GetMovie")]
+    [ProducesResponseType(typeof(Movie), 200)]
     public async Task<ActionResult<Movie>> Get(Guid movie_id)
     {
-        var result = await moviesProvider.GetByIdAsync(movie_id);
-        return result == null ? NotFound() : Ok(result);
+        var req = new GetMovieRequest { Id = movie_id };
+        var response = await mediator.Send(req);
+        return response.ToResult(r => Ok(r), e => NotFound(e));
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(Movie), 201)]
     public async Task<ActionResult<Movie>> Create([FromBody] CreateMovieModel movie)
     {
-        var newValue = new Movie
+        var req = new CreateMovieRequest
         {
             Title = movie.Title,
-            Rating = movie.Rating,
-            ReleasedDate = DateOnly.Parse(movie.ReleasedDate),
+            ReleasedDate = movie.ReleasedDate,
             Director = movie.Director,
-            TopActors = []
+            Rating = movie.Rating,
+            TopActors = movie.TopActors,
+            Poster = movie.Poster
+
         };
-        return await moviesProvider.CreateAsync(newValue);
+        var response = await mediator.Send(req);
+        var url = Url.RouteUrl("GetMovie", new { movie_id = response.Result?.Id }, protocol: Request.Scheme);
+        return response.ToResult(r => Created(url, r), e => NotFound(e));
     }
 
     [HttpDelete]
     [Route("{movie_id}")]
-    public async Task<IActionResult> Delete(Guid movie_id)
+    [ProducesResponseType(200)]
+    public async Task<ActionResult> Delete(Guid movie_id)
     {
-        await moviesProvider.RemoveAsync(movie_id);
-        return Ok();
+        var req = new DeleteMovieRequest { Id = movie_id };
+        var response = await mediator.Send(req);
+        return response.ToResult();
     }
-    
+
     [HttpGet]
     [Route("search")]
+    [ProducesResponseType(typeof(List<Movie>), 200)]
     public async Task<ActionResult<List<Movie>>> Search(string title)
     {
-        return await moviesProvider.GetAsync(movie => movie.Title.Contains(title));
+        var req = new SearchMovieRequest { Title = title };
+        var response = await mediator.Send(req);
+        return response.ToResult(r => Ok(r), e => NotFound(e));
     }
 }

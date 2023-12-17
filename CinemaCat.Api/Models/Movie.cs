@@ -16,5 +16,5 @@ public record class Movie
 
     public int Rating { get; init; }
 
-    public Image Poster { get; set; }
+    public ProfileImage Poster { get; set; }
 }

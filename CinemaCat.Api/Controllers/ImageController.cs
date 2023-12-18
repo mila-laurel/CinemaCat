@@ -1,7 +1,6 @@
-﻿using CinemaCat.Api.DTO;
-using CinemaCat.Api.Extensions;
-using CinemaCat.Api.Handlers.Images.GetImage;
-using CinemaCat.Api.Handlers.Images.UploadImage;
+﻿using CinemaCat.Api.Extensions;
+using CinemaCat.Application.Handlers.Images.GetImage;
+using CinemaCat.Application.Handlers.Images.UploadImage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +25,8 @@ public class ImageController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(UploadedImagesInfo), 200)]
     public async Task<ActionResult<UploadedImagesInfo>> UploadImage(IFormFile file)
     {
-        var req = new UploadImageRequest() { File = file };
+        using var inputStream = file.OpenReadStream();
+        var req = new UploadImageRequest() { File = inputStream };
         var result = await mediator.Send(req);
         var guid = result.Result.Id;
         result.Result.FullImageUrl = $"{Request.Scheme}://{Request.Host}{Url.RouteUrl("GetImage", new { id = guid })}";

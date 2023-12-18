@@ -1,10 +1,10 @@
 ﻿using CinemaCat.Api.DTO;
 using CinemaCat.Api.Extensions;
-using CinemaCat.Api.Handlers.Persons.CreatePerson;
-using CinemaCat.Api.Handlers.Persons.DeletePerson;
-using CinemaCat.Api.Handlers.Persons.GetPerson;
-using CinemaCat.Api.Handlers.Persons.SearchPerson;
-using CinemaCat.Api.Models;
+using CinemaCat.Application.Handlers.Persons.CreatePerson;
+using CinemaCat.Application.Handlers.Persons.DeletePerson;
+using CinemaCat.Application.Handlers.Persons.GetPerson;
+using CinemaCat.Application.Handlers.Persons.SearchPerson;
+using CinemaCat.Infrastructure.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

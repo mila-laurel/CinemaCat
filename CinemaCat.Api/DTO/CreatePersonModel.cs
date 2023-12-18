@@ -1,4 +1,4 @@
-﻿using CinemaCat.Api.Models;
+﻿using CinemaCat.Infrastructure.Models;
 
 namespace CinemaCat.Api.DTO;
 

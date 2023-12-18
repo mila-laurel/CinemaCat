@@ -1,5 +1,5 @@
-﻿using CinemaCat.Infrastructure.Data;
-using CinemaCat.Infrastructure.Models;
+﻿using CinemaCat.Application.Interfaces;
+using CinemaCat.Domain.Models;
 
 namespace CinemaCat.Application.Handlers.Persons.DeletePerson;
 

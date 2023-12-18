@@ -4,7 +4,7 @@ using CinemaCat.Application.Handlers.Persons.CreatePerson;
 using CinemaCat.Application.Handlers.Persons.DeletePerson;
 using CinemaCat.Application.Handlers.Persons.GetPerson;
 using CinemaCat.Application.Handlers.Persons.SearchPerson;
-using CinemaCat.Infrastructure.Models;
+using CinemaCat.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

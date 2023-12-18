@@ -1,4 +1,4 @@
-﻿using CinemaCat.Infrastructure.Models;
+﻿using CinemaCat.Domain.Models;
 
 namespace CinemaCat.Application.Handlers.Movies.GetMovie;
 

@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using CinemaCat.Application.Interfaces;
 using MongoDB.Driver;
 
 namespace CinemaCat.Infrastructure.Data;

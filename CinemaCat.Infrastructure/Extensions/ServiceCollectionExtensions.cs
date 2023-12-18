@@ -1,4 +1,5 @@
-﻿using CinemaCat.Infrastructure.Configuration;
+﻿using CinemaCat.Application.Interfaces;
+using CinemaCat.Infrastructure.Configuration;
 using CinemaCat.Infrastructure.Data;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,7 @@ public static class ServiceCollectionExtensions
         {
             clientBuilder.AddBlobServiceClient(configuration.GetConnectionString("BlobStorage"), preferMsi: true);
         });
+        serviceCollection.AddScoped(typeof(IBlobServiceProvider), typeof(AzureBlobProvider));
     }
 
     private static void ConfigureBsonTypesMapping()

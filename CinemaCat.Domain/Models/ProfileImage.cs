@@ -1,3 +1,3 @@
-﻿namespace CinemaCat.Infrastructure.Models;
+﻿namespace CinemaCat.Domain.Models;
 
 public record class ProfileImage(string FullImageUrl, string CompressedImageUrl);

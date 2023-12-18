@@ -1,17 +1,15 @@
-﻿using Azure.Storage.Blobs;
+﻿using CinemaCat.Application.Interfaces;
 
 namespace CinemaCat.Application.Handlers.Images.GetImage;
 
-public class GetImageHandler(BlobServiceClient blobServiceClient)
+public class GetImageHandler(IBlobServiceProvider blobServiceProvider)
     : ApplicationHandlerBase<GetImageRequest, GetImageResponse>
 {
     protected override async Task<GetImageResponse> HandleInternal(
         GetImageRequest request,
         CancellationToken cancellationToken)
     {
-        BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("images");
-        var blob = containerClient.GetBlobClient((request.IsPreview ? "compressed/" : "full/") + request.Id);
-        var stream = await blob.OpenReadAsync();
+        var stream = await blobServiceProvider.DownloadAsync(request.Id, request.IsPreview);
         return new GetImageResponse { Result = stream };
     }
 }

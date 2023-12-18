@@ -1,4 +1,4 @@
-﻿namespace CinemaCat.Infrastructure.Models;
+﻿namespace CinemaCat.Domain.Models;
 
 public record class Movie
 {

@@ -4,7 +4,7 @@ using CinemaCat.Application.Handlers.Movies.CreateMovie;
 using CinemaCat.Application.Handlers.Movies.DeleteMovie;
 using CinemaCat.Application.Handlers.Movies.GetMovie;
 using CinemaCat.Application.Handlers.Movies.SearchMovie;
-using CinemaCat.Infrastructure.Models;
+using CinemaCat.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

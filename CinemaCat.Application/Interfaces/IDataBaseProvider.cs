@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace CinemaCat.Infrastructure.Data;
+namespace CinemaCat.Application.Interfaces;
 
 public interface IDataBaseProvider<T> where T : class
 {

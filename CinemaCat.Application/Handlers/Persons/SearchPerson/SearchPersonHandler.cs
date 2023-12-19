@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Persons.SearchPerson;
 public class SearchPersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<SearchPersonPequest, SearchPersonResponse>
 {
-    protected override async Task<SearchPersonResponse> HandleInternal(
+    protected override async Task<SearchPersonResponse> HandleInternalAsync(
         SearchPersonPequest request,
         CancellationToken cancellationToken)
     {

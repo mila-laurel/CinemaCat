@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Persons.DeletePerson;
 public class DeletePersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<DeletePersonRequest, DeletePersonResponse>
 {
-    protected override async Task<DeletePersonResponse> HandleInternal(
+    protected override async Task<DeletePersonResponse> HandleInternalAsync(
         DeletePersonRequest request,
         CancellationToken cancellationToken)
     {

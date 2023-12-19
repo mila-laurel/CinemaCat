@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Persons.GetPerson;
 public class GetPersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<GetPersonRequest, GetPersonResponse>
 {
-    protected override async Task<GetPersonResponse> HandleInternal(
+    protected override async Task<GetPersonResponse> HandleInternalAsync(
         GetPersonRequest request,
         CancellationToken cancellationToken)
     {

@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Movies.DeleteMovie;
 public class DeleteMovieHandler(IDataBaseProvider<Movie> moviesProvider)
     : ApplicationHandlerBase<DeleteMovieRequest, DeleteMovieResponse>
 {
-    protected override async Task<DeleteMovieResponse> HandleInternal(
+    protected override async Task<DeleteMovieResponse> HandleInternalAsync(
         DeleteMovieRequest request,
         CancellationToken cancellationToken)
     {

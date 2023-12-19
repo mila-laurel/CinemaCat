@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Movies.GetMovie;
 public class GetMovieHandler(IDataBaseProvider<Movie> moviesProvider)
     : ApplicationHandlerBase<GetMovieRequest, GetMovieResponse>
 {
-    protected override async Task<GetMovieResponse> HandleInternal(
+    protected override async Task<GetMovieResponse> HandleInternalAsync(
         GetMovieRequest request,
         CancellationToken cancellationToken)
     {

@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Persons.CreatePerson;
 public class CreatePersonHandler(IDataBaseProvider<PersonDetails> personsProvider)
     : ApplicationHandlerBase<CreatePersonRequest, CreatePersonResponse>
 {
-    protected override async Task<CreatePersonResponse> HandleInternal(
+    protected override async Task<CreatePersonResponse> HandleInternalAsync(
         CreatePersonRequest request,
         CancellationToken cancellationToken)
     {

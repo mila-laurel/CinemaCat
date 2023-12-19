@@ -6,7 +6,7 @@ namespace CinemaCat.Application.Handlers.Movies.SearchMovie;
 public class SearchMovieHandler(IDataBaseProvider<Movie> moviesProvider)
     : ApplicationHandlerBase<SearchMovieRequest, SearchMovieResponse>
 {
-    protected override async Task<SearchMovieResponse> HandleInternal(
+    protected override async Task<SearchMovieResponse> HandleInternalAsync(
         SearchMovieRequest request,
         CancellationToken cancellationToken)
     {

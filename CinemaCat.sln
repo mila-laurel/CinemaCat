@@ -16,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaCat.Application", "Ci
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaCat.Infrastructure", "CinemaCat.Infrastructure\CinemaCat.Infrastructure.csproj", "{FC605AAC-BDFF-4A80-8581-BCB770039058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaCat.Domain", "CinemaCat.Domain\CinemaCat.Domain.csproj", "{F19BFF95-66CF-4C08-8328-541379816557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaCat.Domain", "CinemaCat.Domain\CinemaCat.Domain.csproj", "{F19BFF95-66CF-4C08-8328-541379816557}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaCat.Application.Tests", "CinemaCat.Application.Tests\CinemaCat.Application.Tests.csproj", "{7A2E8774-B037-4375-BC72-E8D0977909D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{F19BFF95-66CF-4C08-8328-541379816557}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F19BFF95-66CF-4C08-8328-541379816557}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F19BFF95-66CF-4C08-8328-541379816557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A2E8774-B037-4375-BC72-E8D0977909D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A2E8774-B037-4375-BC72-E8D0977909D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A2E8774-B037-4375-BC72-E8D0977909D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A2E8774-B037-4375-BC72-E8D0977909D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

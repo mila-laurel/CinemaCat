@@ -8,7 +8,7 @@ namespace CinemaCat.Application.Handlers.Images.UploadImage;
 public class UploadImageHandler(IBlobServiceProvider blobServiceProvider)
     : ApplicationHandlerBase<UploadImageRequest, UploadImageResponse>
 {
-    protected override async Task<UploadImageResponse> HandleInternal(
+    protected override async Task<UploadImageResponse> HandleInternalAsync(
     UploadImageRequest request,
     CancellationToken cancellationToken)
     {

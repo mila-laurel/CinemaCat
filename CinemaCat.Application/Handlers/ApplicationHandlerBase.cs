@@ -6,21 +6,21 @@ public abstract class ApplicationHandlerBase<TRequest, TResponse> : IRequestHand
     where TRequest : IRequest<TResponse>
     where TResponse : ApplicationResponse, new()
 {
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            return HandleInternal(request, cancellationToken);
+            return await HandleInternalAsync(request, cancellationToken);
         }
         catch (Exception e)
         {
-            return Task.FromResult(new TResponse()
+            return new TResponse()
             {
                 Exception = e,
                 Error = e.Message
-            });
+            };
         }
     }
 
-    protected abstract Task<TResponse> HandleInternal(TRequest request, CancellationToken cancellationToken);
+    protected abstract Task<TResponse> HandleInternalAsync(TRequest request, CancellationToken cancellationToken);
 }

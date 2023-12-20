@@ -4,7 +4,7 @@ using CinemaCat.Domain.Models;
 
 namespace CinemaCat.Application.Tests;
 
-public class DeletePersonHandlerTest
+public class DeletePersonHandlerTests
 {
     private readonly Fixture _fixture = new Fixture();
     private readonly Mock<IDataBaseProvider<PersonDetails>> _dataBaseProviderMock = new();

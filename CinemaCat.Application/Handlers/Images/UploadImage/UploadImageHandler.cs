@@ -18,8 +18,8 @@ public class UploadImageHandler(IBlobServiceProvider blobServiceProvider)
         using (var image = Image.Load(request.File))
         {
             image.Save(fullImageStream, new JpegEncoder());
-            var ratio = image.Height / image.Width;
-            var clone = image.Clone(x => x.Resize(250 * ratio, 250));
+            var ratio = (float)image.Height / image.Width;
+            var clone = image.Clone(x => x.Resize((int)(250 / ratio), 250));
             clone.Save(previewImageStream, new JpegEncoder());
 
             previewImageStream.Position = 0;

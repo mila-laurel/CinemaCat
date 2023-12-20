@@ -1,6 +1,6 @@
 ﻿namespace CinemaCat.Domain.Models;
 
-public class PersonDetails
+public record class PersonDetails
 {
     public Guid Id { get; init; }
 

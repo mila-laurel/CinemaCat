@@ -11,7 +11,7 @@ public class SearchMovieHandler(IDataBaseProvider<Movie> moviesProvider)
         CancellationToken cancellationToken)
     {
         var result = await moviesProvider.GetAsync(movie => movie.Title.Contains(request.Title));
-        if (result.Count == 0)
+        if (result == null || result.Count == 0)
             return new SearchMovieResponse { Error = "No movies with such title" };
         return new SearchMovieResponse { Result = result };
     }

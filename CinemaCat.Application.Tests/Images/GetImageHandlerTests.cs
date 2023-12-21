@@ -1,7 +1,7 @@
 ﻿using CinemaCat.Application.Handlers.Images.GetImage;
 using CinemaCat.Application.Interfaces;
 
-namespace CinemaCat.Application.Tests;
+namespace CinemaCat.Application.Tests.Images;
 
 public class GetImageHandlerTests
 {
@@ -49,6 +49,6 @@ public class GetImageHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.Should().BeSameAs(imageStream);        
+        response.Result.Should().BeSameAs(imageStream);
     }
 }

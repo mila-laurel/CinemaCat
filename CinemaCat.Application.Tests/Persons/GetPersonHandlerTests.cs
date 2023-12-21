@@ -1,24 +1,23 @@
-﻿using CinemaCat.Application.Handlers.Movies.SearchMovie;
+﻿using CinemaCat.Application.Handlers.Persons.GetPerson;
 using CinemaCat.Application.Interfaces;
 using CinemaCat.Domain.Models;
-using System.Linq.Expressions;
 
-namespace CinemaCat.Application.Tests;
+namespace CinemaCat.Application.Tests.Persons;
 
-public class SearchMovieHandlerTests
+public class GetPersonHandlerTests
 {
     private readonly IFixture _fixture = new Fixture().Customize(new DateOnlyFixtureCustomization());
-    private readonly Mock<IDataBaseProvider<Movie>> _dataBaseProviderMock = new();
+    private readonly Mock<IDataBaseProvider<PersonDetails>> _dataBaseProviderMock = new();
 
     [Fact]
     public async Task Handle_ThrowsException_Error()
     {
         // arrange
-        var request = _fixture.Create<SearchMovieRequest>();
+        var request = _fixture.Create<GetPersonRequest>();
         var exception = new Exception("a weird error");
-        _dataBaseProviderMock.Setup(p => p.GetAsync(It.IsAny<Expression<Func<Movie, bool>>>()))
+        _dataBaseProviderMock.Setup(m => m.GetByIdAsync(It.IsAny<Guid>()))
             .ThrowsAsync(exception);
-        var _handler = new SearchMovieHandler(_dataBaseProviderMock.Object);
+        var _handler = new GetPersonHandler(_dataBaseProviderMock.Object);
 
         // act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -33,11 +32,11 @@ public class SearchMovieHandlerTests
     public async Task Handle_Success_ReturnsResult()
     {
         // arrange
-        var request = _fixture.Create<SearchMovieRequest>();
-        var movie = _fixture.Create<Movie>() with { Title = request.Title };
-        _dataBaseProviderMock.Setup(p => p.GetAsync(It.IsAny<Expression<Func<Movie, bool>>>()))
-            .ReturnsAsync(new List<Movie> { movie });
-        var _handler = new SearchMovieHandler(_dataBaseProviderMock.Object);
+        var request = _fixture.Create<GetPersonRequest>();
+        var person = _fixture.Create<PersonDetails>() with { Id = request.Id };
+        _dataBaseProviderMock.Setup(m => m.GetByIdAsync(person.Id))
+            .ReturnsAsync(person);
+        var _handler = new GetPersonHandler(_dataBaseProviderMock.Object);
 
         // act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -45,6 +44,6 @@ public class SearchMovieHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.First().Should().Be(movie);
+        response.Result.Should().Be(person);
     }
 }

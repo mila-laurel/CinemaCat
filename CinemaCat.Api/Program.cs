@@ -1,5 +1,4 @@
 using CinemaCat.Application.Extensions;
-using CinemaCat.Infrastructure.Configuration;
 using CinemaCat.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.Configure<MongoConfiguration>(builder.Configuration.GetSection(MongoConfiguration.SectionName));
+//builder.Services.Configure<MongoConfiguration>(builder.Configuration.GetSection(MongoConfiguration.SectionName));
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();

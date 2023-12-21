@@ -2,13 +2,13 @@ using CinemaCat.Application.Handlers.Movies.CreateMovie;
 using CinemaCat.Application.Interfaces;
 using CinemaCat.Domain.Models;
 
-namespace CinemaCat.Application.Tests;
+namespace CinemaCat.Application.Tests.Movies;
 
 public class CreateMovieHandlerTests
 {
     private readonly Fixture _fixture = new Fixture();
     private readonly Mock<IDataBaseProvider<Movie>> _dataBaseProviderMock = new();
-    
+
     [Fact]
     public async Task Handle_ThrowsException_Error()
     {
@@ -22,7 +22,7 @@ public class CreateMovieHandlerTests
         CreateMovieHandler _handler = new CreateMovieHandler(_dataBaseProviderMock.Object);
 
         // act
-        var response =  await _handler.Handle(request, CancellationToken.None);
+        var response = await _handler.Handle(request, CancellationToken.None);
 
         // assert
         response.IsSuccess.Should().BeFalse();
@@ -50,7 +50,7 @@ public class CreateMovieHandlerTests
         response.Result.Title.Should().Be(request.Title);
         response.Result.Rating.Should().Be(request.Rating);
         response.Result.ReleasedDate.Should().Be(DateOnly.Parse(request.ReleasedDate));
-        response.Result.Director.Should().Be(request.Director); 
+        response.Result.Director.Should().Be(request.Director);
         response.Result.TopActors.SequenceEqual(request.TopActors);
         response.Result.Poster.Should().Be(request.Poster);
     }

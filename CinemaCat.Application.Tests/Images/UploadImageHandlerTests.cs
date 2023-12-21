@@ -1,10 +1,9 @@
 ﻿using CinemaCat.Application.Handlers.Images.UploadImage;
 using CinemaCat.Application.Interfaces;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.ColorSpaces;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace CinemaCat.Application.Tests;
+namespace CinemaCat.Application.Tests.Images;
 
 public class UploadImageHandlerTests
 {
@@ -19,7 +18,7 @@ public class UploadImageHandlerTests
         using var sourceStream = new MemoryStream();
         image.SaveAsPng(sourceStream);
         sourceStream.Position = 0;
-        var request = new UploadImageRequest() { File = sourceStream};
+        var request = new UploadImageRequest() { File = sourceStream };
         var exception = new Exception("a weird error");
         _blobServiceMock.Setup(m => m.UploadAsync(It.IsAny<MemoryStream>(), It.IsAny<MemoryStream>()))
             .ThrowsAsync(exception);
@@ -42,12 +41,12 @@ public class UploadImageHandlerTests
         using var sourceStream = new MemoryStream();
         image.SaveAsPng(sourceStream);
         sourceStream.Position = 0;
-        var request = new UploadImageRequest() { File = sourceStream};
+        var request = new UploadImageRequest() { File = sourceStream };
         Stream savedFullStream = null;
         Stream savedPreviewStream = null;
 
         _blobServiceMock.Setup(m => m.UploadAsync(It.IsAny<MemoryStream>(), It.IsAny<MemoryStream>()))
-            .Callback<Stream, Stream>((fullStream,previewStream) =>
+            .Callback<Stream, Stream>((fullStream, previewStream) =>
             {
                 savedFullStream = new MemoryStream((fullStream as MemoryStream).ToArray());
                 savedPreviewStream = new MemoryStream((previewStream as MemoryStream).ToArray());

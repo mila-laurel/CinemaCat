@@ -2,7 +2,7 @@
 using CinemaCat.Application.Interfaces;
 using CinemaCat.Domain.Models;
 
-namespace CinemaCat.Application.Tests;
+namespace CinemaCat.Application.Tests.Persons;
 
 public class DeletePersonHandlerTests
 {

@@ -1,4 +1,4 @@
-﻿using CinemaCat.Api.Handlers;
+﻿using CinemaCat.Application.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaCat.Api.Extensions;

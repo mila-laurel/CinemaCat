@@ -1,10 +1,10 @@
 using CinemaCat.Api.DTO;
 using CinemaCat.Api.Extensions;
-using CinemaCat.Api.Handlers.Movies.CreateMovie;
-using CinemaCat.Api.Handlers.Movies.DeleteMovie;
-using CinemaCat.Api.Handlers.Movies.GetMovie;
-using CinemaCat.Api.Handlers.Movies.SearchMovie;
-using CinemaCat.Api.Models;
+using CinemaCat.Application.Handlers.Movies.CreateMovie;
+using CinemaCat.Application.Handlers.Movies.DeleteMovie;
+using CinemaCat.Application.Handlers.Movies.GetMovie;
+using CinemaCat.Application.Handlers.Movies.SearchMovie;
+using CinemaCat.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -22,6 +22,7 @@ public static class ServiceCollectionExtensions
     private static void AddMongoDb(IServiceCollection serviceCollection, IConfiguration configuration)
     {
         ConfigureBsonTypesMapping();
+        serviceCollection.Configure<MongoConfiguration>(configuration.GetSection(MongoConfiguration.SectionName));
 
         serviceCollection.Configure<MongoConfiguration>(configuration.GetSection(MongoConfiguration.SectionName));
 

@@ -24,8 +24,6 @@ public static class ServiceCollectionExtensions
         ConfigureBsonTypesMapping();
         serviceCollection.Configure<MongoConfiguration>(configuration.GetSection(MongoConfiguration.SectionName));
 
-        serviceCollection.Configure<MongoConfiguration>(configuration.GetSection(MongoConfiguration.SectionName));
-
         serviceCollection.AddSingleton<MongoClient>(provider =>
         {
             var options = provider.GetRequiredService<IOptions<MongoConfiguration>>();

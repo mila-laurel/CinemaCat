@@ -1,4 +1,5 @@
 using CinemaCat.Domain.Identity;
+using FluentAssertions;
 
 namespace CinemaCat.Domain.Tests;
 
@@ -11,7 +12,9 @@ public class IdentityUtilsTests
     {
         var result = IdentityUtils.GenerateSalt(length);
 
-        result.Length.Equals(length);
+        result.Should().HaveLength(length);
+        var symbolAsserts = result.Select(symbol => (Action)(() => symbol.Should().BeInRange((char)0, 'z'))).ToArray();
+        Assert.Multiple(symbolAsserts);
     }
 
     [Fact]

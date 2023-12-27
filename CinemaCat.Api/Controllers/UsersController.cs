@@ -19,7 +19,7 @@ public class UsersController(IMediator mediator) : ControllerBase
     private readonly IOptions<JwtConfiguration> _jwtConfiguration;
 
     [HttpPost("signup")]
-    public async Task<ActionResult> Register([FromBody] CreateUserModel user)
+    public async Task<ActionResult<object>> Register([FromBody] CreateUserModel user)
     {
         var request = new RegisterUserRequest
         {

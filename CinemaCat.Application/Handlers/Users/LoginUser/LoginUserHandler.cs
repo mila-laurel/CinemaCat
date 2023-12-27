@@ -1,5 +1,6 @@
 ﻿using CinemaCat.Application.Configuration;
 using CinemaCat.Application.Interfaces;
+using CinemaCat.Domain.Exceptions;
 using CinemaCat.Domain.Identity;
 using CinemaCat.Domain.Models;
 using Microsoft.Extensions.Options;
@@ -17,14 +18,14 @@ public class LoginUserHandler(IDataBaseProvider<ApplicationUser> userProvider, I
         var existingUser = await userProvider.GetAsync(u => u.Email == request.Email);
         if (existingUser == null || !existingUser.Any())
         {
-            return new LoginUserResponse { Error = "User with that email does not exists" };
+            throw new AuthorizationException("User with that email does not exists");
         }
 
         var passwordHash = existingUser.First().PasswordHash;
         var generatedHash = IdentityUtils.GetPasswordHash(request.Password + existingUser.First().Salt);
         if (passwordHash != generatedHash)
         {
-            return new LoginUserResponse { Error = "The password is wrong" };
+            throw new AuthorizationException("The password is wrong");
         }
         var roles = existingUser.First().Roles.Select(r => new Claim(ClaimTypes.Role, r));
 

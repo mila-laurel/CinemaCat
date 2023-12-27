@@ -46,7 +46,7 @@ public class MoviesController(IMediator mediator) : ControllerBase
     [HttpDelete]
     [Route("{movie_id}")]
     [ProducesResponseType(200)]
-    public async Task<ActionResult> Delete(Guid movie_id)
+    public async Task<ActionResult<object>> Delete(Guid movie_id)
     {
         var req = new DeleteMovieRequest { Id = movie_id };
         var response = await mediator.Send(req);

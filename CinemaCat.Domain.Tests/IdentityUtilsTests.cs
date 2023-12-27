@@ -21,5 +21,7 @@ public class IdentityUtilsTests
     public void GetPasswordHash_ReturnsHexString()
     {
         var result = IdentityUtils.GetPasswordHash("pppp");
+
+        result.Should().MatchRegex("^[A-Fa-f0-9]{64}$");
     }
 }

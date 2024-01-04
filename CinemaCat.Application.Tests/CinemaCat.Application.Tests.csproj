@@ -29,8 +29,4 @@
     <ProjectReference Include="..\CinemaCat.Application\CinemaCat.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Users\" />
-  </ItemGroup>
-
 </Project>

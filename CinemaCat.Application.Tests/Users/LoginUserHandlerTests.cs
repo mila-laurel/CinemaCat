@@ -62,6 +62,13 @@ public class LoginUserHandlerTests
         man.PasswordHash = IdentityUtils.GetPasswordHash(request.Password + man.Salt);
         _userProviderMock.Setup(m => m.GetAsync(It.IsAny<Expression<Func<ApplicationUser, bool>>>()))
             .ReturnsAsync(new List<ApplicationUser>() { man });
+        _jwtConfiguration.SetupGet(m => m.Value)
+            .Returns(new JwtConfiguration
+            {
+                Issuer = "unitTestIssuer",
+                Audience = "unitTestAudience",
+                Key = "unitTestsKeyUnitTestsKeyUnitTestsKeyUnitTestsKeyUnitTestsKeyUnitTestsKeyUnitTestsKey"
+            });
         var _handler = new LoginUserHandler(_userProviderMock.Object, _jwtConfiguration.Object);
 
         // act

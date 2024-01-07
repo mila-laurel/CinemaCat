@@ -6,6 +6,9 @@ using CinemaCat.Domain.Identity;
 using CinemaCat.Domain.Models;
 using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace CinemaCat.Application.Tests.Users;
 public class LoginUserHandlerTests
@@ -73,8 +76,15 @@ public class LoginUserHandlerTests
 
         // act
         var response = await _handler.Handle(request, CancellationToken.None);
-
+        
         // assert
         response.IsSuccess.Should().BeTrue();
+        response.Result.Should().NotBeNullOrWhiteSpace();
+
+        var splittedString = response.Result.Split('.');
+        var json = Encoding.UTF8.GetString(Convert.FromBase64String(splittedString[1]));
+        var document = JsonNode.Parse(json);
+        document["iss"].ToString().Should().Be("unitTestIssuer");
+        document["aud"].ToString().Should().Be("unitTestAudience");
     }
 }

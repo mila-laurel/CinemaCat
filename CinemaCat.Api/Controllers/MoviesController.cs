@@ -6,6 +6,7 @@ using CinemaCat.Application.Handlers.Movies.GetMovie;
 using CinemaCat.Application.Handlers.Movies.SearchMovie;
 using CinemaCat.Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaCat.Api.Controllers;
@@ -16,6 +17,7 @@ public class MoviesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     [Route("{movie_id}", Name = "GetMovie")]
+    [Authorize(Roles = "user")]
     [ProducesResponseType(typeof(Movie), 200)]
     public async Task<ActionResult<Movie>> Get(Guid movie_id)
     {
@@ -25,6 +27,7 @@ public class MoviesController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(typeof(Movie), 201)]
     public async Task<ActionResult<Movie>> Create([FromBody] CreateMovieModel movie)
     {
@@ -45,8 +48,9 @@ public class MoviesController(IMediator mediator) : ControllerBase
 
     [HttpDelete]
     [Route("{movie_id}")]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(200)]
-    public async Task<ActionResult> Delete(Guid movie_id)
+    public async Task<ActionResult<object>> Delete(Guid movie_id)
     {
         var req = new DeleteMovieRequest { Id = movie_id };
         var response = await mediator.Send(req);
@@ -55,6 +59,7 @@ public class MoviesController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [Route("search")]
+    [Authorize(Roles = "user")]
     [ProducesResponseType(typeof(List<Movie>), 200)]
     public async Task<ActionResult<List<Movie>>> Search(string title)
     {

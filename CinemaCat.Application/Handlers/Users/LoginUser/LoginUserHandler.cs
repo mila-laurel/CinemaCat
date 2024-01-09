@@ -27,22 +27,22 @@ public class LoginUserHandler(IDataBaseProvider<ApplicationUser> userProvider, I
         {
             throw new AuthorizationException("The password is wrong");
         }
-        var roles = existingUser.First().Roles.Select(r => new Claim(ClaimTypes.Role, r));
+        var roles = existingUser.First()?.Roles?.Select(r => new Claim(ClaimTypes.Role, r));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("Id", Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, request.Email),
-                new Claim(ClaimTypes.Email, request.Email),
+                new Claim(ClaimTypes.NameIdentifier, request.Email ?? string.Empty),
+                new Claim(ClaimTypes.Email, request.Email ?? string.Empty),
                 new Claim(ClaimTypes.Sid, Guid.NewGuid().ToString())
-            }.Union(roles)),
+            }.Union(roles ?? Enumerable.Empty<Claim>())),
             Expires = DateTime.UtcNow.AddMinutes(60),
             Issuer = jwtConfiguration.Value.Issuer,
             Audience = jwtConfiguration.Value.Audience,
             SigningCredentials = new SigningCredentials(
-               new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Key)),
+               new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Key ?? string.Empty)),
                SecurityAlgorithms.HmacSha512Signature)
         };
         var tokenHandler = new JwtSecurityTokenHandler();

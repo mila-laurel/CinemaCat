@@ -32,9 +32,12 @@ public class ImageController(IMediator mediator) : ControllerBase
         using var inputStream = file.OpenReadStream();
         var req = new UploadImageRequest() { File = inputStream };
         var result = await mediator.Send(req);
-        var guid = result.Result.Id;
-        result.Result.FullImageUrl = Url.RouteUrl("GetImage", new { id = guid }, protocol: Request.Scheme);
-        result.Result.CompressedImageUrl = Url.RouteUrl("GetImage", new { id = guid, compressed = true }, protocol: Request.Scheme);
+        if (result.Result != null)
+        {
+            var guid = result.Result.Id;
+            result.Result.FullImageUrl = Url.RouteUrl("GetImage", new { id = guid }, protocol: Request.Scheme);
+            result.Result.CompressedImageUrl = Url.RouteUrl("GetImage", new { id = guid, compressed = true }, protocol: Request.Scheme);
+        }
         return result.ToResult();
     }
 }

@@ -8,7 +8,7 @@ public record class Movie
 
     public DateOnly ReleasedDate { get; init; }
 
-    public string[] Countries { get; init; }
+    public string[]? Countries { get; init; }
 
     public required Person Director { get; init; }
 
@@ -16,5 +16,5 @@ public record class Movie
 
     public int Rating { get; init; }
 
-    public ProfileImage Poster { get; set; }
+    public ProfileImage? Poster { get; set; }
 }

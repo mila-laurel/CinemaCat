@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddAzureClients(clientBuilder =>
         {
-            clientBuilder.AddBlobServiceClient(configuration.GetConnectionString("BlobStorage") ?? string.Empty, preferMsi: true);
+            clientBuilder.AddBlobServiceClient(configuration.GetConnectionString("BlobStorage") ?? throw new ArgumentNullException("Blob strorage connection string"), preferMsi: true);
         });
         serviceCollection.AddScoped(typeof(IBlobServiceProvider), typeof(AzureBlobProvider));
     }

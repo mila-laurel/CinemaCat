@@ -34,7 +34,7 @@ public class SearchPersonHandlerTests
     {
         // arrange
         var request = _fixture.Create<SearchPersonPequest>();
-        var man = _fixture.Create<PersonDetails>() with { Name = request.Name };
+        var man = _fixture.Create<PersonDetails>() with { Name = request.Name ?? string.Empty };
         _dataBaseProviderMock.Setup(p => p.GetAsync(It.IsAny<Expression<Func<PersonDetails, bool>>>()))
             .ReturnsAsync(new List<PersonDetails> { man });
         var _handler = new SearchPersonHandler(_dataBaseProviderMock.Object);
@@ -45,6 +45,6 @@ public class SearchPersonHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.First().Should().Be(man);
+        response.Result?.First().Should().Be(man);
     }
 }

@@ -34,7 +34,7 @@ public class SearchMovieHandlerTests
     {
         // arrange
         var request = _fixture.Create<SearchMovieRequest>();
-        var movie = _fixture.Create<Movie>() with { Title = request.Title };
+        var movie = _fixture.Create<Movie>() with { Title = request.Title ?? string.Empty };
         _dataBaseProviderMock.Setup(p => p.GetAsync(It.IsAny<Expression<Func<Movie, bool>>>()))
             .ReturnsAsync(new List<Movie> { movie });
         var _handler = new SearchMovieHandler(_dataBaseProviderMock.Object);
@@ -45,6 +45,6 @@ public class SearchMovieHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.First().Should().Be(movie);
+        response.Result?.First().Should().Be(movie);
     }
 }

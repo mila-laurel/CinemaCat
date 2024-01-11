@@ -1,13 +1,9 @@
 ﻿using CinemaCat.Api.DTO;
 using CinemaCat.Api.Extensions;
-using CinemaCat.Application.Configuration;
 using CinemaCat.Application.Handlers.Users.LoginUser;
 using CinemaCat.Application.Handlers.Users.RegisterUser;
-using CinemaCat.Application.Interfaces;
-using CinemaCat.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace CinemaCat.Api.Controllers;
 
@@ -15,9 +11,6 @@ namespace CinemaCat.Api.Controllers;
 [ApiController]
 public class UsersController(IMediator mediator) : ControllerBase
 {
-    private readonly IDataBaseProvider<ApplicationUser> _userProvider;
-    private readonly IOptions<JwtConfiguration> _jwtConfiguration;
-
     [HttpPost("signup")]
     public async Task<ActionResult<object>> Register([FromBody] CreateUserModel user)
     {

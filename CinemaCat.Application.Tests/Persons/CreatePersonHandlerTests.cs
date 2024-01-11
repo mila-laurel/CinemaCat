@@ -47,9 +47,9 @@ public class CreatePersonHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.Name.Should().Be(request.Name);
-        response.Result.PlaceOfBirth.Should().Be(request.PlaceOfBirth);
-        response.Result.DateOfBirth.Should().Be(DateOnly.Parse(request.DateOfBirth));
-        response.Result.Photo.Should().Be(request.Photo);
+        response.Result?.Name.Should().Be(request.Name);
+        response.Result?.PlaceOfBirth.Should().Be(request.PlaceOfBirth);
+        response.Result?.DateOfBirth.Should().Be(DateOnly.Parse(request.DateOfBirth ?? string.Empty));
+        response.Result?.Photo.Should().Be(request.Photo);
     }
 }

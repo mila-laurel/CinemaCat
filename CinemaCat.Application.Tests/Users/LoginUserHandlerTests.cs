@@ -81,10 +81,16 @@ public class LoginUserHandlerTests
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNullOrWhiteSpace();
 
-        var splittedString = response.Result.Split('.');
-        var json = Encoding.UTF8.GetString(Convert.FromBase64String(splittedString[1]));
-        var document = JsonNode.Parse(json);
-        document["iss"].ToString().Should().Be("unitTestIssuer");
-        document["aud"].ToString().Should().Be("unitTestAudience");
+        if (response.Result != null)
+        {
+            var splittedString = response.Result.Split('.');
+            var json = Encoding.UTF8.GetString(Convert.FromBase64String(splittedString[1]));
+            var document = JsonNode.Parse(json);
+            if (document != null)
+            {
+                document["iss"]?.ToString().Should().Be("unitTestIssuer");
+                document["aud"]?.ToString().Should().Be("unitTestAudience");
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ public class CreatePersonHandler(IDataBaseProvider<PersonDetails> personsProvide
         var newValue = new PersonDetails
         {
             Name = request.Name,
-            DateOfBirth = DateOnly.Parse(request.DateOfBirth),
+            DateOfBirth = DateOnly.Parse(request.DateOfBirth ?? string.Empty),
             PlaceOfBirth = request.PlaceOfBirth,
             Photo = request.Photo
         };

@@ -47,11 +47,11 @@ public class CreateMovieHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.Title.Should().Be(request.Title);
-        response.Result.Rating.Should().Be(request.Rating);
-        response.Result.ReleasedDate.Should().Be(DateOnly.Parse(request.ReleasedDate));
-        response.Result.Director.Should().Be(request.Director);
-        response.Result.TopActors.SequenceEqual(request.TopActors);
-        response.Result.Poster.Should().Be(request.Poster);
+        response.Result?.Title.Should().Be(request.Title);
+        response.Result?.Rating.Should().Be(request.Rating);
+        response.Result?.ReleasedDate.Should().Be(DateOnly.Parse(request.ReleasedDate ?? string.Empty));
+        response.Result?.Director.Should().Be(request.Director);
+        response.Result?.TopActors.SequenceEqual(request.TopActors ?? Array.Empty<Person>());
+        response.Result?.Poster.Should().Be(request.Poster);
     }
 }

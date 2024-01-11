@@ -1,5 +1,6 @@
 using CinemaCat.Application.Configuration;
 using CinemaCat.Application.Extensions;
+using CinemaCat.Domain.Exceptions;
 using CinemaCat.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -53,7 +54,7 @@ builder.Services.AddAuthentication(options =>
     {
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new ConfigurationException("Jwt key is missing"))),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,

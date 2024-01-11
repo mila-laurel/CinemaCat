@@ -1,4 +1,5 @@
 ﻿using CinemaCat.Application.Interfaces;
+using CinemaCat.Domain.Exceptions;
 using CinemaCat.Infrastructure.Configuration;
 using CinemaCat.Infrastructure.Data;
 using Microsoft.Extensions.Azure;
@@ -43,7 +44,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddAzureClients(clientBuilder =>
         {
-            clientBuilder.AddBlobServiceClient(configuration.GetConnectionString("BlobStorage"), preferMsi: true);
+            clientBuilder.AddBlobServiceClient(configuration.GetConnectionString("BlobStorage") ?? throw new ConfigurationException("Blob strorage connection string is missing"), preferMsi: true);
         });
         serviceCollection.AddScoped(typeof(IBlobServiceProvider), typeof(AzureBlobProvider));
     }

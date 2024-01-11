@@ -8,7 +8,7 @@ public record class PersonDetails
 
     public DateOnly DateOfBirth { get; set; }
 
-    public string PlaceOfBirth { get; set; }
+    public string? PlaceOfBirth { get; set; }
 
-    public ProfileImage Photo { get; set; }
+    public ProfileImage? Photo { get; set; }
 }

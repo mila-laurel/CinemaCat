@@ -4,5 +4,5 @@ namespace CinemaCat.Application.Handlers.Movies.SearchMovie;
 
 public class SearchMovieRequest : IRequest<SearchMovieResponse>
 {
-    public string Title { get; init; }
+    public required string Title { get; init; }
 }

@@ -42,14 +42,14 @@ public class UploadImageHandlerTests
         image.SaveAsPng(sourceStream);
         sourceStream.Position = 0;
         var request = new UploadImageRequest() { File = sourceStream };
-        Stream savedFullStream = null;
-        Stream savedPreviewStream = null;
+        Stream? savedFullStream = null;
+        Stream? savedPreviewStream = null;
 
         _blobServiceMock.Setup(m => m.UploadAsync(It.IsAny<MemoryStream>(), It.IsAny<MemoryStream>()))
             .Callback<Stream, Stream>((fullStream, previewStream) =>
             {
-                savedFullStream = new MemoryStream((fullStream as MemoryStream).ToArray());
-                savedPreviewStream = new MemoryStream((previewStream as MemoryStream).ToArray());
+                savedFullStream = new MemoryStream((fullStream as MemoryStream)?.ToArray() ?? Array.Empty<byte>());
+                savedPreviewStream = new MemoryStream((previewStream as MemoryStream)?.ToArray() ?? Array.Empty<byte>());
             })
             .ReturnsAsync(Guid.Empty);
         var _handler = new UploadImageHandler(_blobServiceMock.Object);
@@ -60,7 +60,7 @@ public class UploadImageHandlerTests
         // assert
         response.IsSuccess.Should().BeTrue();
         response.Result.Should().NotBeNull();
-        response.Result.Id.Should().Be(Guid.Empty.ToString());
+        response.Result?.Id.Should().Be(Guid.Empty.ToString());
         savedPreviewStream.Should().NotBeNull();
         savedFullStream.Should().NotBeNull();
         var previewImamge = Image.Load(savedPreviewStream);

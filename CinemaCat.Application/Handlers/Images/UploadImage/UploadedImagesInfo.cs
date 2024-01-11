@@ -2,9 +2,9 @@
 
 public class UploadedImagesInfo
 {
-    public string FullImageUrl { get; set; }
+    public string? FullImageUrl { get; set; }
 
-    public string CompressedImageUrl { get; set; }
+    public string? CompressedImageUrl { get; set; }
 
-    public string Id { get; set; }
+    public string? Id { get; set; }
 }
